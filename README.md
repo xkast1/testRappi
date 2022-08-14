@@ -46,7 +46,7 @@ Como correr la app en entorno local
 
   Buscar Usuario: "http://${minikube ip}:31150/rappi/obtenerUsuario?dni=${dni}" metodo get ejemplo: 
     
-    "http://${minikube ip}:31150/rappi/obtenerUsuario?dni=18116523-5"
+      "http://${minikube ip}:31150/rappi/obtenerUsuario?dni=18116523-5"
   
   Modificar Usuario: "http://${minikube ip}:31150/rappi/modificarUsuario" metodo Post con el siguiente json con los datos modificados:
 
@@ -61,6 +61,6 @@ Como correr la app en entorno local
         "fechaSalida": "20/09/2030"
       }
 
-  Eliminar Usuario: "http://${minikube ip}:31150/rappi/borrarUsuario??dni=${dni}" metodo get ejemplo: 
+  Eliminar Usuario: "http://${minikube ip}:31150/rappi/borrarUsuario?dni=${dni}" metodo get ejemplo: 
 
-      "http://${minikube ip}:31150/rappi/borrarUsuario??dni=18116523-5"
+      "http://${minikube ip}:31150/rappi/borrarUsuario?dni=18116523-5"
