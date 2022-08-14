@@ -33,7 +33,7 @@ Como correr la app en entorno local
 - Los endpoint de la app son:
   Agregar Usuario: "http://${minikube ip}:31150/rappi/agregarUsuario" metodo Post con el siguiente json 
      
-     {
+      {
         "dni": "18116523-5",
         "nombre": "Juan",
         "apellido": "Acuna",
@@ -42,11 +42,11 @@ Como correr la app en entorno local
         "edad": "30",
         "fechaContratacion": "20/09/2022",
         "fechaSalida": "20/09/2030"
-     }
+      }
 
   Buscar Usuario: "http://${minikube ip}:31150/rappi/obtenerUsuario?dni=${dni}" metodo get ejemplo: 
     
-    http://${minikube ip}:31150/rappi/obtenerUsuario?dni=18116523-5
+    "http://${minikube ip}:31150/rappi/obtenerUsuario?dni=18116523-5"
   
   Modificar Usuario: "http://${minikube ip}:31150/rappi/modificarUsuario" metodo Post con el siguiente json con los datos modificados:
 
