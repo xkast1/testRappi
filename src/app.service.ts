@@ -5,7 +5,8 @@ import { UsuarioDTO } from './usuarioDTO';
 @Injectable()
 export class AppService {
 
-  private mongouri = "mongodb+srv://prueba:Nm2245697@cluster0.jeesn.mongodb.net/rappiTest?retryWrites=true&w=majority";
+  private mongouri = "mongodb://prueba:prueba@my-release-mongodb.default.svc.cluster.local:27017/rappitest?retryWrites=true&w=majority";
+  //private mongouri = "mongodb+srv://root:Nm2245697@mongo/rappiTest?retryWrites=true&w=majority";
   private client;
 
   getHello(): string {
@@ -18,7 +19,7 @@ export class AppService {
     await this.client.connect();
     return new Promise((resolve) =>{
         this.client
-          .db('rappiTest')
+          .db('rappitest')
           .collection('abm')
           .find({'dni': dni})
           .toArray((error, result) => {
@@ -37,7 +38,7 @@ export class AppService {
     await this.client.connect();
     return new Promise((resolve) =>{
         this.client
-          .db('rappiTest')
+          .db('rappitest')
           .collection('abm')
           .deleteOne({'dni': dni}, (error, result) => {
             if (error) throw error;
@@ -57,7 +58,7 @@ export class AppService {
     await this.client.connect();
     return new Promise((resolve) =>{
       this.client
-        .db('rappiTest')
+        .db('rappitest')
         .collection('abm')
         .findOneAndReplace({'dni': usuarioDTO.dni}, usuarioDTO, null, (error, res) => {
           if(error) throw error;
@@ -71,7 +72,7 @@ export class AppService {
     await this.client.connect();
     return new Promise((resolve) =>{
       this.client
-        .db('rappiTest')
+        .db('rappitest')
         .collection('abm')
         .insertOne(usuarioDTO, (error, res) => {
           if (error) throw error;

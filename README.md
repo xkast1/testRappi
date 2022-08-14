@@ -1,73 +1,66 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+Descripcion y diagrama de la arquitectura https://docs.google.com/presentation/d/1lr_WTDt1CDrUyxUARTy-I7GzvyY1AQ9AN7HtnnqWx_g/edit?usp=sharing
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+¿Que se hizo?
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+- Una App que permite realizar un ABM de usuarios.
 
-## Description
+¿Como se hizo?
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- Utilizando nodejs, nestjs, MongoDB, Docker, Kubernetes (minikube), Traefik, helm, Ansible.  
 
-## Installation
+¿Porque lo hice?
 
-```bash
-$ npm install
-```
+- Porque quize plasmar mis habilidades en Docker y Kubernetes, igualmente mis habilidades de desarrollo, utilizando un lenguaje muy utilizado hoy en dia como lo son NodeJS, y una base de datos como MongoDB.
 
-## Running the app
+Como correr la app en entorno local
 
-```bash
-# development
-$ npm run start
+- Tener instalado Minikube, Docker, Git, Helm, Ansible
 
-# watch mode
-$ npm run start:dev
+- 1er   Levantar minikube con el comando "minikube start --vm-driver=virtualbox"
+  2do   Ingresar al directorio ansible-role-traefik-kubernetes/tasks del repositorio y ejecutar "ansible-playbook install.yml --extra-vars "{\"NOMBRE\":\"testrappi\"}" "
+  3ero  Ejecutar "eval $(minikube docker-env)" para que la imagen se compile dentro del la VM de minikube
+  4to   Ejecutar en el directorio raiz del proyecto "docker build -t test:testrappi  ."
+  5to   Realizar el despliegue de la app (Deployments, Services, Ingress) en Kubernetes con los siguientes comandos en el directorio raiz del proyecto:
+         - kubectl apply -f deployment.yml
+         - kubectl apply -f service.yml
+         - kubectl apply -f ingress.yml
+  6to   Desplegar MongoDB con helm "helm install my-release \
+        --set auth.rootPassword=root,auth.username=prueba,auth.password=prueba,auth.database=rappitest \
+        bitnami/mongodb"
 
-# production mode
-$ npm run start:prod
-```
+- Para conocer la IP de minikube ejecutar el siguiente comando "minikube ip"
 
-## Test
+- Los endpoint de la app son:
+  Agregar Usuario: "http://${minikube ip}:31150/rappi/agregarUsuario" metodo Post con el siguiente json 
+     
+     {
+        "dni": "18116523-5",
+        "nombre": "Juan",
+        "apellido": "Acuna",
+        "direccion": "Raymond Monvoisin 913",
+        "telefono": "+56962394415",
+        "edad": "30",
+        "fechaContratacion": "20/09/2022",
+        "fechaSalida": "20/09/2030"
+     }
 
-```bash
-# unit tests
-$ npm run test
+  Buscar Usuario: "http://${minikube ip}:31150/rappi/obtenerUsuario?dni=${dni}" metodo get ejemplo: 
+    
+    http://${minikube ip}:31150/rappi/obtenerUsuario?dni=18116523-5
+  
+  Modificar Usuario: "http://${minikube ip}:31150/rappi/modificarUsuario" metodo Post con el siguiente json con los datos modificados:
 
-# e2e tests
-$ npm run test:e2e
+      {
+        "dni": "18116523-5",
+        "nombre": "Pedro",
+        "apellido": "Acuna",
+        "direccion": "Raymond Monvoisin 913",
+        "telefono": "+56962394415",
+        "edad": "30",
+        "fechaContratacion": "20/09/2022",
+        "fechaSalida": "20/09/2030"
+      }
 
-# test coverage
-$ npm run test:cov
-```
+  Eliminar Usuario: "http://${minikube ip}:31150/rappi/borrarUsuario??dni=${dni}" metodo get ejemplo: 
 
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+      "http://${minikube ip}:31150/rappi/borrarUsuario??dni=18116523-5"

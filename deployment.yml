@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rappitest
+spec:
+  selector:
+    matchLabels:
+      app: rappitest
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: rappitest
+    spec:
+      containers:
+      - name: testrappi
+        image: test:testrappi
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 3000
+          protocol: TCP
+        resources:
+          requests:
+            cpu: 100m
+            memory: 480M
+          limits:
+            memory: 785M
+            cpu: 1000m
+        readinessProbe:
+          tcpSocket:
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          tcpSocket:
+            port: 3000
+          initialDelaySeconds: 15
+          periodSeconds: 20
