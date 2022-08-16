@@ -17,8 +17,8 @@ Como correr la app en entorno local
 - Tener instalado Minikube, Docker, Git, Helm, Ansible
 
 - Levantar minikube con el comando "minikube start --vm-driver=virtualbox"
-- Ingresar al directorio ansible-role-traefik-kubernetes/tasks del repositorio y ejecutar 
-  ''' "ansible-playbook install.yml --extra-vars "{\"NOMBRE\":\"testrappi\"}" '''
+- Ingresar al directorio ansible-role-traefik-kubernetes/tasks del repositorio y ejecutar: 
+  "ansible-playbook install.yml --extra-vars "{\"NOMBRE\":\"testrappi\"}"
 - Ejecutar "eval $(minikube docker-env)" para que la imagen se compile dentro del la VM de minikube
 - Ejecutar en el directorio raiz del proyecto "docker build -t test:testrappi  ."
 - Realizar el despliegue de la app (Deployments, Services, Ingress) en Kubernetes con los siguientes comandos en el directorio raiz del proyecto:
