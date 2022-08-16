@@ -22,7 +22,8 @@ Como correr la app en entorno local
 - Ejecutar "eval $(minikube docker-env)" para que la imagen se compile dentro del la VM de minikube
 - Ejecutar en el directorio raiz del proyecto ```docker build -t test:testrappi  .```
 - Realizar el despliegue de la app (Deployments, Services, Ingress) en Kubernetes con los siguientes comandos en el directorio raiz del proyecto:
-```      - kubectl apply -f deployment.yml
+```      
+         - kubectl apply -f deployment.yml
          - kubectl apply -f service.yml
          - kubectl apply -f ingress.yml 
 ```        
