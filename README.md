@@ -6,7 +6,7 @@ Descripcion y diagrama de la arquitectura https://docs.google.com/presentation/d
 
 ¿Como se hizo?
 
-- Utilizando nodejs, nestjs, MongoDB, Docker, Kubernetes (minikube), Traefik, helm, Ansible.  
+- Utilizando nodejs, nestjs, MongoDB, Docker, Kubernetes (minikube), Traefik, helm, Ansible, virtualbox, kubectl.  
 
 ¿Porque lo hice?
 
