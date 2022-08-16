@@ -16,23 +16,24 @@ Como correr la app en entorno local
 
 - Tener instalado Minikube, Docker, Git, Helm, Ansible
 
-- Levantar minikube con el comando "minikube start --vm-driver=virtualbox"
+- Levantar minikube con el comando ```minikube start --vm-driver=virtualbox```
 - Ingresar al directorio ansible-role-traefik-kubernetes/tasks del repositorio y ejecutar: 
-  ``` "ansible-playbook install.yml --extra-vars "{\"NOMBRE\":\"testrappi\"}" ```
+  ``` ansible-playbook install.yml --extra-vars "{\"NOMBRE\":\"testrappi\"}"```
 - Ejecutar "eval $(minikube docker-env)" para que la imagen se compile dentro del la VM de minikube
-- Ejecutar en el directorio raiz del proyecto "docker build -t test:testrappi  ."
+- Ejecutar en el directorio raiz del proyecto ```docker build -t test:testrappi  .```
 - Realizar el despliegue de la app (Deployments, Services, Ingress) en Kubernetes con los siguientes comandos en el directorio raiz del proyecto:
-         - kubectl apply -f deployment.yml
+```      - kubectl apply -f deployment.yml
          - kubectl apply -f service.yml
-         - kubectl apply -f ingress.yml
-- Desplegar MongoDB con helm "helm install my-release \
+         - kubectl apply -f ingress.yml 
+```        
+- Desplegar MongoDB con helm ```helm install my-release \
         --set auth.rootPassword=root,auth.username=prueba,auth.password=prueba,auth.database=rappitest \
-        bitnami/mongodb"
+        bitnami/mongodb```
 
-- Para conocer la IP de minikube ejecutar el siguiente comando "minikube ip"
+- Para conocer la IP de minikube ejecutar el siguiente comando ```minikube ip```
 
 - Los endpoint de la app son:
-  Agregar Usuario: "http://${minikube ip}:31150/rappi/agregarUsuario" metodo Post con el siguiente json 
+  Agregar Usuario: ```http://${minikube ip}:31150/rappi/agregarUsuario``` metodo Post con el siguiente json 
      
       {
         "dni": "18116523-5",
@@ -45,11 +46,11 @@ Como correr la app en entorno local
         "fechaSalida": "20/09/2030"
       }
 
-  Buscar Usuario: "http://${minikube ip}:31150/rappi/obtenerUsuario?dni=${dni}" metodo get ejemplo: 
+  Buscar Usuario: ```http://${minikube ip}:31150/rappi/obtenerUsuario?dni=${dni}``` metodo get ejemplo: 
     
       "http://${minikube ip}:31150/rappi/obtenerUsuario?dni=18116523-5"
   
-  Modificar Usuario: "http://${minikube ip}:31150/rappi/modificarUsuario" metodo Post con el siguiente json con los datos modificados:
+  Modificar Usuario: ```http://${minikube ip}:31150/rappi/modificarUsuario``` metodo Post con el siguiente json con los datos modificados:
 
       {
         "dni": "18116523-5",
@@ -62,6 +63,6 @@ Como correr la app en entorno local
         "fechaSalida": "20/09/2030"
       }
 
-  Eliminar Usuario: "http://${minikube ip}:31150/rappi/borrarUsuario?dni=${dni}" metodo get ejemplo: 
+  Eliminar Usuario: ```http://${minikube ip}:31150/rappi/borrarUsuario?dni=${dni}``` metodo get ejemplo: 
 
       "http://${minikube ip}:31150/rappi/borrarUsuario?dni=18116523-5"
