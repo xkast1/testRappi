@@ -27,9 +27,7 @@ Como correr la app en entorno local
          - kubectl apply -f service.yml
          - kubectl apply -f ingress.yml 
 ```        
-- Desplegar MongoDB con helm ```helm install my-release \
-        --set auth.rootPassword=root,auth.username=prueba,auth.password=prueba,auth.database=rappitest \
-        bitnami/mongodb```
+- Desplegar MongoDB con helm ```helm install my-release --set auth.rootPassword=root,auth.username=prueba,auth.password=prueba,auth.database=rappitest bitnami/mongodb```
 
 - Para conocer la IP de minikube ejecutar el siguiente comando ```minikube ip```
 
